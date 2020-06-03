@@ -9,7 +9,7 @@ class Roulette():
 	
 	OPEN = 'open'
 	CLOSE = 'close'
-	WITHOUT_RESULT = {} 
+	WITHOUT_RESULT = {}
 
 	def __init__(self, id=None, status=None, result=None, number_bets=0):
 		self.__id = id if id else str(uuid.uuid4())
