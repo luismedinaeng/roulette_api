@@ -54,3 +54,12 @@ class Bet():
 	def user_id(self):
 		return self.__user_id
 
+	@property
+	def status(self):
+		return self.status
+	
+	def updateStatus(self, result):
+		if self.token = result["color"] or self.token = result["number"]:
+			self.status = WIN
+		else:
+			self.status = LOSE
