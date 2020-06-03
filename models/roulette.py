@@ -73,6 +73,17 @@ class Roulette():
 		for bet in self.__bets:
 			bet.update_status(self.__result)
 
+	def to_dict(self):
+		new_dict = {}
+		for key, value in self.__dict__.items():
+			new_key = key.split('__')[-1]
+			if new_key != 'bets':
+				new_dict[new_key] = value
+			else:
+				new_dict[new_key] = len(self.__bets)
+
+		return new_dict
+
 	@staticmethod
 	def get_color_of_result(result):
 		black_numbers = [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35]
