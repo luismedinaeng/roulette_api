@@ -4,6 +4,7 @@ from flask import Flask, make_response, jsonify, request, abort
 import models
 from models.bet import Bet
 from models.roulette import Roulette
+from os import getenv
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -84,7 +85,11 @@ def create_bet(id):
 		abort(400, description="Too many args")
 
 if __name__ == '__main__':
-	host = '0.0.0.0'
-	port = 5000	
+	host = getenv('ROULETTE_API_HOST')
+	port = getenv('ROULETTE_API_PORT')
+	if not host:
+		host = '0.0.0.0'
+	if not port:
+		port = 5000	
 	app.run(host=host, port=port, debug=True)
 
