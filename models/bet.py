@@ -15,12 +15,12 @@ class Bet():
 	LOSE = 2
 
 	def __init__(self, token, value, user_id, roulette_id, id=None, status=None):
-		self.token = token
-		self.value = value
 		self.__user_id = user_id
 		self.__roulette_id = roulette_id
 		self.__id = id if id else str(uuid.uuid4())
 		self.__status = status if status else Bet.WAITING		
+		self.token = token
+		self.value = value
 		self.save()
 
 	@property
