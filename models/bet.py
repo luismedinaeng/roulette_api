@@ -17,7 +17,7 @@ class Bet():
 		self.token = token
 		self.value = value
 		self.__user_id = user_id		
-		self.__id = id if id else str(uuid.uid4())
+		self.__id = id if id else str(uuid.uuid4())
 		self.__status = status if status else Bet.WAITING		
 
 	@property
