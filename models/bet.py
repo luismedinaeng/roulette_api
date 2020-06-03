@@ -45,6 +45,8 @@ class Bet():
 	def value(self, new_value):
 		if new_value > Bet.MAX_VALUE:
 			raise ValueError("Value of the bet should be less than 10.000 USD")
+		elif new_value < 0:
+			raise ValueError("Value of the bet should be positive")
 		else:
 			self.__value = new_value
 
@@ -56,6 +58,10 @@ class Bet():
 	def status(self):
 		return self.__status
 	
+	@property
+	def roulette_id(self):
+		return self.__roulette_id
+
 	def update_status(self, result):
 		if self.token == result["color"] or self.token == result["number"]:
 			self.__status = Bet.WIN
