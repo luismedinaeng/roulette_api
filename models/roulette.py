@@ -14,7 +14,7 @@ class Roulette():
 	def __init__(self, id=None, status=None, result=None, bets=[]):
 		self.__id = id if id else str(uuid.uuid4())
 		self.__status = status if status else Roulette.CLOSE
-		self.bets = self.get_bets
+		self.bets = self.get_bets()
 		self.__result = result if result else Roulette.WITHOUT_RESULT
 		self.save()
 
@@ -110,7 +110,7 @@ class Roulette():
 		return color
 
 	def get_bets(self):
-		all_bets = casino.all(Bet)
+		all_bets = models.casino.all(Bet)
 		actual_bets = []
 		for key, obj in all_bets:
 			if self.id == obj.roulette_id:
