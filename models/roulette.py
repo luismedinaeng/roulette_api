@@ -1,14 +1,13 @@
 #!/usr/bin/python3
-
+from models.bet import Bet
 import random
 import uuid
-from models.bet import Bet
 
 class Roulette():
 	
 	OPEN = 0
 	CLOSE = 1
-	WITHOUT_RESULT = -1
+	WITHOUT_RESULT = {} 
 
 	def __init__(self, id):
 		self.id = id if id else str(uuid.uuid4())
@@ -58,7 +57,7 @@ class Roulette():
 		if self.status = OPEN:
 			number = random.randrange(Bet.MIN_TOKEN, Bet.MAX_TOKEN)
 			color = get_color_of_result(number)
-			self.__result = (number, color)
+			self.__result = {'number': number, 'color': color}
 
 	@staticmethod
 	def get_color_of_result(result):
