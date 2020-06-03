@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from flask import Flask, make_response, jsonify
+from flask import Flask, make_response, jsonify, request, abort
 import models
 from models.bet import Bet
 from models.roulette import Roulette
@@ -10,7 +10,7 @@ app.url_map.strict_slashes = False
 
 
 @app.errorhandler(404)
-def endpoint_not_found():
+def endpoint_not_found(error):
 	content = jsonify({'error': 'Not found'})
 	return make_response(content, 404)
 
@@ -18,8 +18,8 @@ def endpoint_not_found():
 def index():
 	content = jsonify({'status': 'OK'})
 	return make_response(content, 200)
-	
-@app.route('/ruletas', methods=['GET'])
+
+@app.route('/roulettes', methods=['GET'])
 def get_roulettes():
 	roulettes = models.casino.all(Roulette).values()
 	list_roulettes = []	
