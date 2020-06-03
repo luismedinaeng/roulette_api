@@ -25,7 +25,7 @@ class Roulette():
 
 	@property
 	def status(self):
-		return self.status
+		return self.__status
 
 	@status.setter
 	def status(self, status):
@@ -62,6 +62,11 @@ class Roulette():
 			number = random.randrange(Bet.MIN_TOKEN, Bet.MAX_TOKEN)
 			color = get_color_of_result(number)
 			self.__result = {'number': number, 'color': color}
+			self.close_bets()
+
+	def close_bets(self):
+		for bet in self.__bets:
+			bet.update_status(self.__result)
 
 	@staticmethod
 	def get_color_of_result(result):
