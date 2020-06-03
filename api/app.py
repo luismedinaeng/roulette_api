@@ -34,7 +34,6 @@ def get_roulettes():
 def new_roulette():
 	instance = Roulette()
 	instance.save()
-	print
 	content = jsonify({'id_roulette': instance.id})
 	return make_response(content, 200)
 
@@ -48,9 +47,10 @@ def open_roulette(id):
 @app.route('/roulettes/<id>/close', methods=['GET'])	
 def close_roulette(id):
 	roulette = models.casino.get(Roulette, id)
+	roulette.close()
 	list_bets = []
-	for bet in roulette.bets():
-		list_bets.append(bet)
+	for bet in roulette.bets:
+		list_bets.append(bet.to_dict())
 	content = jsonify(list_bets)
 	return make_response(content, 200)
 
@@ -59,7 +59,7 @@ def check_json_bet(request):
 	if not request.get_json():
 	   description = "Not a JSON"
 	elif 'user_id' not in request.get_json():
-		description = "missing user_id"
+		description = "Missing user_id"
 	elif 'token' not in request.get_json():
 		description = "Missing token"
 	elif 'value' not in request.get_json():
@@ -80,7 +80,8 @@ def create_bet(id):
 	data['roulette_id'] = id
 	try:
 		bet = Bet(**data)
-		bet.save()
+		roulette.add_bet(bet)
+		return make_response(jsonify(bet.to_dict()), 200)
 	except:
 		abort(400, description="Too many args")
 
