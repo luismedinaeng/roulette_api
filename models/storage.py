@@ -16,11 +16,14 @@ class Storage:
 		host = getenv("ROULETTE_DB_HOST")
 		port = getenv("ROULETTE_DB_PORT")
 		db = getenv("ROULETTE_DB")
+		test = getenv("ROULETTE_ENV")
 		if not host:
 			host = 'localhost'
 		if not port:
 			port = '6379'
-		if not db:
+		if test and test == 'test':
+			db = 15
+		elif not db:
 			db = 0
 		self.__engine = redis.Redis(host=host, port=port, db=db)
 
