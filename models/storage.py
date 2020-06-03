@@ -49,9 +49,6 @@ class Storage:
 			if key in self.__objects:
 				del self.__objects[key]
 
-	def close(self):
-		self.reload()
-
 	def get(self, cls, id):
 		if cls not in classes:
 			return None
