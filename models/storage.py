@@ -60,6 +60,7 @@ class Storage:
 			key = obj.__class__.__name__ + ":" + obj.id
 			if key in self.__objects:
 				del self.__objects[key]
+				self.__engine.delete(key)
 
 	def get(self, cls, id):
 		if cls not in classes:
