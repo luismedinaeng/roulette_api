@@ -21,7 +21,6 @@ class Bet():
 		self.__status = status if status else Bet.WAITING		
 		self.token = token
 		self.value = value
-		self.save()
 
 	@property
 	def id(self):
@@ -35,7 +34,6 @@ class Bet():
 	def token(self, token):
 		if token in [Bet.BLACK_TOKEN, Bet.RED_TOKEN] or token in range(Bet.MIN_TOKEN, Bet.MAX_TOKEN + 1):
 			self.__token = token
-			self.save()
 		else:
 			raise ValueError("The bet is not in the limits")
 
@@ -49,7 +47,6 @@ class Bet():
 			raise ValueError("Value of the bet should be less than 10.000 USD")
 		else:
 			self.__value = new_value
-			self.save()
 
 	@property
 	def user_id(self):
@@ -77,3 +74,6 @@ class Bet():
 	def save(self):
 		models.casino.new(self)
 		models.casino.save()
+
+	def delete(self):
+		models.casino.delete(self)
