@@ -24,9 +24,9 @@ You are ready for run the application!
 
 # Run
 
-In order to run the application, you need to have a redis-server running on your local machine. Make sure the redise-server is listening on port 6379. This is the default port for redis and is the one managed by the application.
+In order to run the application, you need to have a redis-server running on your local machine. Make sure the redise-server is listening on port `6379`. This is the default port for redis and is the one managed by the application.
 
-Also, the flask api runs on port 5000 by default, so make sure you don't have any application listening on that port.
+Also, the flask api runs on port `5000` by default, so make sure you don't have any application listening on that port.
 
 Run command:
 ```bash
@@ -46,10 +46,10 @@ You can check your connection with.
 
 ## Build with
 
-	- Redis
-	- Flask
-	- Python
-	- redis for python
+- Redis
+- Flask
+- Python
+- redis for python
 
 
 ## Author
