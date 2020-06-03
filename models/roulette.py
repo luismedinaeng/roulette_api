@@ -7,8 +7,8 @@ import uuid
 
 class Roulette():
 	
-	OPEN = 0
-	CLOSE = 1
+	OPEN = 'open'
+	CLOSE = 'close'
 	WITHOUT_RESULT = {} 
 
 	def __init__(self, id=None, status=None, result=None, bets=[]):
