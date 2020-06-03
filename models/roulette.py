@@ -6,7 +6,7 @@ import redis
 import uuid
 
 class Roulette():
-	
+
 	OPEN = 'open'
 	CLOSE = 'close'
 	WITHOUT_RESULT = {}
@@ -21,7 +21,7 @@ class Roulette():
 	@property
 	def id(self):
 		return self.__id
-	
+
 	@property
 	def status(self):
 		return self.__status
@@ -90,7 +90,7 @@ class Roulette():
 			models.casino.unwatch()
 
 	def close_bets(self):
-		for bet in self.__bets:
+		for bet in self.bets:
 			bet.update_status(self.__result)
 
 	def to_dict(self):
@@ -109,7 +109,7 @@ class Roulette():
 			color = Bet.BLACK_TOKEN
 		else:
 			color = Bet.RED_TOKEN
-		
+
 		return color
 
 	def save(self):
