@@ -39,8 +39,12 @@ class Roulette():
 		return self.__result
 
 	def add_bet(self, new_bet):
-		self.__bets.append(new_bet)
-	
+		if self.__status == Roulette.OPEN:
+			self.__bets.append(new_bet)
+			return True
+		else:
+			return False
+
 	def delete_bet(self, bet_id):
 		for bet in self.__bets:
 			if bet.id == bet_id:
@@ -53,8 +57,10 @@ class Roulette():
 	def open(self):
 		if self.status == Roulette.CLOSE:
 			self.clean()
-			self.result = Roulette.WITHOUT_RESULT
-			self.status = Roulette.OPEN
+			self.__result = Roulette.WITHOUT_RESULT
+			self.__status = Roulette.OPEN
+		
+		return True
 			
 	def close(self):
 		if self.status == Roulette.OPEN:
