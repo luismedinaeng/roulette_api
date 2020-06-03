@@ -13,20 +13,16 @@ class Bet():
 	WIN = 1
 	LOSE = 2
 
-	def __init__(self, id, token, value, user_id):
-		self.id = id 
+	def __init__(self, token, value, user_id, id=None, status=None):
 		self.token = token
 		self.value = value
-		self.__user_id = user_id
-		self.__status = Bet.WAITING 
+		self.__user_id = user_id		
+		self.__id = id if id else str(uuid.uid4())
+		self.__status = status if status else Bet.WAITING		
 
 	@property
 	def id(self):
 		return self.__id
-
-	@id.setter
-	def id(self, id):
-		self.__id = id
 
 	@property
 	def token(self):
