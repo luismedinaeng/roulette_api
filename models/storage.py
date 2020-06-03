@@ -13,7 +13,16 @@ class Storage:
 	__objects = {}
 
 	def __init__(self):
-		self.__engine = redis.Redis()
+		host = getenv("ROULETTE_DB_HOST")
+		port = getenv("ROULETTE_DB_PORT")
+		db = getenv("ROULETTE_DB")
+		if not host:
+			host = 'localhost'
+		if not port:
+			port = '6379'
+		if not db:
+			db = 0
+		self.__engine = redis.Redis(host=host, port=port, db=db)
 
 	def all(self, cls=None):
 		if cls is not None:
