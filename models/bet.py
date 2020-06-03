@@ -13,20 +13,20 @@ class Bet():
 	WIN = 1
 	LOSE = 2
 
-	def __init__(self, id=None, token, value, user_id):
-		self.id = id if id else str(uuid.uuid4())
+	def __init__(self, id, token, value, user_id):
+		self.id = id 
 		self.token = token
 		self.value = value
 		self.__user_id = user_id
-		self.status = WAITING 
+		self.__status = Bet.WAITING 
 
 	@property
 	def id(self):
-		return self.id
+		return self.__id
 
 	@id.setter
 	def id(self, id):
-		self.id = id
+		self.__id = id
 
 	@property
 	def token(self):
@@ -34,7 +34,7 @@ class Bet():
 
 	@token.setter
 	def token(self, token):
-		if token in [BLACK_TOKEN, RED_TOKEN] or token in range(MIN_TOKEN, MAX_TOKEN + 1):
+		if token in [Bet.BLACK_TOKEN, Bet.RED_TOKEN] or token in range(Bet.MIN_TOKEN, Bet.MAX_TOKEN + 1):
 			self.__token = token
 		else:
 			raise ValueError("The bet is not in the limits")
@@ -45,7 +45,7 @@ class Bet():
 
 	@value.setter
 	def value(self, new_value):
-		if new_value > MAX_VALUE:
+		if new_value > Bet.MAX_VALUE:
 			raise ValueError("Value of the bet should be less than 10.000 USD")
 		else:
 			self.__value = new_value
@@ -56,10 +56,10 @@ class Bet():
 
 	@property
 	def status(self):
-		return self.status
+		return self.__status
 	
-	def updateStatus(self, result):
-		if self.token = result["color"] or self.token = result["number"]:
-			self.status = WIN
+	def update_status(self, result):
+		if self.token == result["color"] or self.token == result["number"]:
+			self.__status = Bet.WIN
 		else:
-			self.status = LOSE
+			self.__status = Bet.LOSE
