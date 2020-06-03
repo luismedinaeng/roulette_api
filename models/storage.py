@@ -58,12 +58,11 @@ class Storage:
 				self.__objects[key] = cls(**json_element)
 
 	def delete(self, obj=None):
-		if obj is not None:
-			key = Storage.get_object_key(obj)
-			if key in self.__objects:
-				del self.__objects[key]
-				self.__engine.delete(key)
-				self.__engine.delete("counter:" + key)
+		key = Storage.get_object_key(obj)
+		if key in self.__objects:
+			self.__engine.delete(key)
+			self.__engine.delete("counter:" + key)
+			del self.__objects[key]
 
 	def get(self, cls, id):
 		if cls not in classes:
@@ -98,3 +97,6 @@ class Storage:
 
 	def unwatch(self):
 		self.__engine.unwatch()
+
+	def delete_database(self):
+		self.__engine.flushdb()
