@@ -64,7 +64,7 @@ class Roulette():
 		bets = models.casino.all(Bet).values()
 		for bet in bets:
 			if bet.roulette_id == self.__id:
-				delete_bet(bet)
+				self.delete_bet(bet)
 		self.save()
 
 	def open(self):
@@ -82,6 +82,7 @@ class Roulette():
 					number = random.randrange(Bet.MIN_TOKEN, Bet.MAX_TOKEN)
 					color = Roulette.get_color_of_result(number)
 					self.__result = {'number': number, 'color': color}
+					self.__status = Roulette.CLOSE
 					self.save()
 					self.close_bets()
 					break
