@@ -1,13 +1,13 @@
 #!/usr/bin/python3
-
+import models
 from models.bet import Bet
 import unittest
 
 class TestBet(unittest.TestCase):
 	
 	def setUp(self):
-		self.bet1 = Bet(id="2", token=Bet.BLACK_TOKEN, value=5000, user_id="1357")
-		self.bet2 = Bet(id="3",token=30, value=5000, user_id="1357") 
+		self.bet1 = Bet(token=Bet.BLACK_TOKEN, value=5000, user_id="1357", roulette_id="1234")
+		self.bet2 = Bet(token=30, value=5000, user_id="1357", roulette_id="1234") 
 
 	def test_instatiation(self):
 		self.assertEqual(self.bet1.id, "2")
