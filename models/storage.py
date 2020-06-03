@@ -38,13 +38,15 @@ class Storage:
 
 	def new(self, obj):
 		if obj is not None:
-			key = obj.__class__.__name__ + ":" + obj.id
+			key = Storage.get_object_key(obj) 
 			self.__objects[key] = obj
 
 	def save(self):
 		with self.__engine.pipeline() as pipe:
 			for key, value in self.__objects.items():
-				pipe.set(key, json.dumps(value.to_dict()))		
+				pipe.set(key, json.dumps(value.to_dict()))
+				if Roulette.__name__ in key:
+					self.set_roulette_counter(value)		
 			pipe.execute()
 
 	def reload(self):
@@ -57,15 +59,15 @@ class Storage:
 
 	def delete(self, obj=None):
 		if obj is not None:
-			key = obj.__class__.__name__ + ":" + obj.id
+			key = Storage.get_object_key(obj)
 			if key in self.__objects:
 				del self.__objects[key]
 				self.__engine.delete(key)
+				self.__engine.delete(key + ":bet")
 
 	def get(self, cls, id):
 		if cls not in classes:
 			return None
-
 		all_cls = self.all(cls)
 		for value in all_cls.values():
 			if (value.id == id):
@@ -73,8 +75,25 @@ class Storage:
 
 		return None
 
-	def watch_object(self, obj):
-		key = obj.__class__.__name__ + ":" + obj.id		
+	@staticmethod
+	def get_object_key(obj):
+		return  obj.__class__.__name__ + ":" + obj.id
+	
+	def set_roulette_counter(self, roulette):
+		key = Storage.get_object_key(roulette) + ":bets"
+		if not self.__engine.exists(key):
+			self.__engine.set(key, roulette.number_bets)
+
+	def add_bet_to_roulette(self, roulette):
+		key = Storage.get_object_key(roulette) + ":bets"
+		self.__engine.incr(key)
+	
+	def delete_bet_to_roulette(self, roulette):
+		key = Storage.get_object_key(roulette) + ":bets"
+		self.__engine.decr(key)
+	
+	def watch_roulette_counter(self, roulette):
+		key = Storage.get_object_key(roulette) + ":bets"
 		self.__engine.watch(key)	
 
 	def unwatch(self):
