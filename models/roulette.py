@@ -11,10 +11,10 @@ class Roulette():
 	CLOSE = 'close'
 	WITHOUT_RESULT = {} 
 
-	def __init__(self, id=None, status=None, result=None, bets=[]):
+	def __init__(self, id=None, status=None, result=None, number_bets=0):
 		self.__id = id if id else str(uuid.uuid4())
 		self.__status = status if status else Roulette.CLOSE
-		self.bets = self.get_bets()
+		self.__number_bets = number_bets
 		self.__result = result if result else Roulette.WITHOUT_RESULT
 		self.save()
 
@@ -28,15 +28,17 @@ class Roulette():
 
 	@property
 	def bets(self):
-		return self.__bets
-	
-	@bets.setter
-	def bets(self, bets_list):
-		if isinstance(bets_list, list):		
-			self.__bets = bets_list
-			self.save()
-		else:
-			raise TypeError("Bets should be a list")
+		all_bets = models.casino.all(Bet)
+		actual_bets = []
+		for key, obj in all_bets.items():
+			if self.id == obj.roulette_id:
+				actual_bets.append(obj)
+
+		return actual_bets
+
+	@property
+	def number_bets(self):
+		return self.__number_bets
 
 	@property
 	def result(self):
@@ -91,10 +93,7 @@ class Roulette():
 		new_dict = {}
 		for key, value in self.__dict__.items():
 			new_key = key.split('__')[-1]
-			if new_key != 'bets':
-				new_dict[new_key] = value
-			else:
-				new_dict[new_key] = len(self.__bets)
+			new_dict[new_key] = value
 
 		return new_dict
 
