@@ -9,11 +9,11 @@ class Roulette():
 	CLOSE = 1
 	WITHOUT_RESULT = {} 
 
-	def __init__(self):
-		self.id = id if id else str(uuid.uuid4())
-		self.status = Roulette.CLOSE
-		self.__bets = []
-		self.__result = Roulette.WITHOUT_RESULT
+	def __init__(self, id=None, status=None, result=None, bets=[]):
+		self.__id = id if id else str(uuid.uuid4())
+		self.__status = status if status else Roulette.CLOSE
+		self.bets = bets
+		self.__result = result if result else Roulette.WITHOUT_RESULT
 
 	@property
 	def id(self):
