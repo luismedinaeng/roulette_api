@@ -63,7 +63,7 @@ class Roulette():
 	def clean(self):
 		bets = models.casino.all(Bet).values()
 		for bet in bets:
-			if bet.roulette_id = self.__id:
+			if bet.roulette_id == self.__id:
 				delete_bet(bet)
 		self.save()
 
