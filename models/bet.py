@@ -59,3 +59,11 @@ class Bet():
 			self.__status = Bet.WIN
 		else:
 			self.__status = Bet.LOSE
+
+	def to_dict(self):
+		new_dict = {}
+		for key, value in self.__dict__.items():
+			new_key = key.split('__')[-1]
+			new_dict[new_key] = value
+
+		return new_dict
