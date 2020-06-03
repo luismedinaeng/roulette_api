@@ -13,7 +13,7 @@ class Bet():
 	WIN = 1
 	LOSE = 2
 
-	def __init__(self, id=None, token, value, user_id, status):		
+	def __init__(self, id=None, token, value, user_id):
 		self.id = id if id else str(uuid.uuid4())
 		self.token = token
 		self.value = value
