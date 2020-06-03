@@ -46,21 +46,25 @@ class Roulette():
 
 	def add_bet(self, new_bet):
 		if self.__status == Roulette.OPEN:
-			self.__bets.append(new_bet)
+			new_bet.save()
+			self.__number_bets += 1
+			models.casino.add_bet_to_roulette(self)
 			return True
 		else:
 			return False
 		self.save()
 
-	def delete_bet(self, bet_id):
-		for bet in self.__bets:
-			if bet.id == bet_id:
-				self.__bets.remove(bet)
-				self.save()
-				break
+	def delete_bet(self, bet):
+		bet.delete()
+		self.__number_bets -= 1
+		models.casino.delete_bet_to_roulette(self)
+		self.save()
 
 	def clean(self):
-		self.__bets.clear()
+		bets = models.casino.all(Bet).values()
+		for bet in bets:
+			if bet.roulette_id = self.__id:
+				delete_bet(bet)
 		self.save()
 
 	def open(self):
@@ -74,7 +78,7 @@ class Roulette():
 		if self.status == Roulette.OPEN:
 			while True:
 				try:
-					models.casino.watch_object(self)
+					models.casino.watch_roulette_counter(self)
 					number = random.randrange(Bet.MIN_TOKEN, Bet.MAX_TOKEN)
 					color = Roulette.get_color_of_result(number)
 					self.__result = {'number': number, 'color': color}
@@ -108,16 +112,9 @@ class Roulette():
 		
 		return color
 
-	def get_bets(self):
-		all_bets = models.casino.all(Bet)
-		actual_bets = []
-		for key, obj in all_bets:
-			if self.id == obj.roulette_id:
-				actual_bets.append(obj)
-
-		return actual_bets
-
-
 	def save(self):
 		models.casino.new(self)
 		models.casino.save()
+
+	def delete(self):
+		models.casino.delete(self)
