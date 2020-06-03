@@ -19,21 +19,20 @@ class Roulette():
 	def id(self):
 		return self.__id
 	
-	@id.setter
-	def id(self, id):
-		self.__id = id
-
 	@property
 	def status(self):
 		return self.__status
 
-	@status.setter
-	def status(self, status):
-		self.__status = status
-
 	@property
 	def bets(self):
 		return self.__bets
+	
+	@bets.setter
+	def bets(self, bets_list):
+		if isinstance(bets_list, list):		
+			self.__bets = bets_list
+		else:
+			raise TypeError("Bets should be a list")
 
 	@property
 	def result(self):
